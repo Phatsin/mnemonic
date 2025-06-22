@@ -111,7 +111,6 @@ echo
 SUGGESTED_PASS=$(openssl rand -base64 12)
 
 while true; do
-  echo
   echo "🔐 Suggested passphrase: $SUGGESTED_PASS"
   echo "  1) Use suggested passphrase"
   echo "  2) Enter a custom passphrase"

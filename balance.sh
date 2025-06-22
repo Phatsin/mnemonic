@@ -38,10 +38,25 @@ curl -s "https://api.mainnet-beta.solana.com" \
  awk '{printf "%.9f SOL\n", $1/1000000000}'
 
 # ── XRP via XRPScan API ──────────────────────────────────────────────────────
+NODE="https://s1.ripple.com:51234/"
+
 echo -n "XRP [$XRP_ADDR] : "
-curl -s "https://api.xrpscan.com/api/v1/account/$XRP_ADDR" |
- jq -r '.account_data.Balance' |
- awk '{printf "%.6f XRP\n", $1/1000000}'
+
+read -r -d '' PAYLOAD <<-EOF
+{"method": "account_info", "params":[{"account":"$XRP_ADDR","ledger_index":"validated","strict":true}]}
+EOF
+
+resp=$(curl -s -X POST -H "Content-Type: application/json" \
+     --data "$PAYLOAD" "$NODE")
+
+bal=$(echo "$resp" | jq -r '.result.account_data.Balance' 2>/dev/null)
+
+if [[ "$bal" =~ ^[0-9]+$ ]]; then
+  bal_xrp=$(echo "scale=6; $bal/1000000" | bc)
+  echo "$bal_xrp XRP"
+else
+  echo "Unable to fetch balance (account not found or node issue)"
+fi
 
 # ── XLM via Horizon (Stellar) API ────────────────────────────────────────────
 echo -n "XLM [$XLM_ADDR] : "

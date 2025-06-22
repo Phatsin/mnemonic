@@ -50,6 +50,6 @@ family_seed = encode_seed(entropy16, "ed25519")
 
 print("Derivation path  : m/44'/144'/0'/0/0")
 print("XRP Address      :", wallet.PublicKey().ToAddress())          # r... (classic)
+print("XRP Secret       :", family_seed)
 print("Public Key (hex) :", wallet.PublicKey().RawCompressed().ToHex())
 print("Private Key (hex):", wallet.PrivateKey().Raw().ToHex())
-print("Family-seed      :", family_seed)
