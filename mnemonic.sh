@@ -107,9 +107,38 @@ MNEMONIC_STR="${MNEMONIC[*]}"
 echo "$MNEMONIC_STR"
 echo
 
-# ─── Optional Passphrase ─────────────────────
-read -r -p "Enter passphrase (blank for none): " PASSPHRASE
-echo
+# ─── Optional Passphrase (menu loop) ────────────────
+SUGGESTED_PASS=$(openssl rand -base64 12)
+
+while true; do
+  echo
+  echo "🔐 Suggested passphrase: $SUGGESTED_PASS"
+  echo "  1) Use suggested passphrase"
+  echo "  2) Enter a custom passphrase"
+  echo "  3) No passphrase"
+  read -r -n1 -p "Select [1-3] : " CHOICE
+  echo
+  case "$CHOICE" in
+    1)
+       PASSPHRASE="$SUGGESTED_PASS"
+       echo "(Using suggested passphrase)"
+       break
+       ;;
+    2)
+       read -r -p "Enter your passphrase: " PASSPHRASE
+       echo "(Using custom passphrase)"
+       break
+       ;;
+    3|"")
+       PASSPHRASE=""
+       echo "(No passphrase will be used)"
+       break
+       ;;
+    *)
+       echo "❌ Invalid choice — please press 1, 2, or 3."
+       ;;
+  esac
+done
 
 # ─── PBKDF2 → Seed ───────────────────────────
 echo -e "\n# STEP-7 : Seed 512-bit (PBKDF2-HMAC-SHA512, 2048 rounds)"
