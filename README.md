@@ -22,10 +22,10 @@ Supports an optional passphrase and derives the final 512‑bit seed with PBKDF2
 ```bash
 chmod +x mnemonic.sh
 
-# 12‑word (default)
+# Generate 12-word mnemonic (default)
 ./mnemonic.sh
 
-# 24‑word
+# Generate 24-word mnemonic
 ./mnemonic.sh -w 24
 ```
 
@@ -36,16 +36,29 @@ Output includes:
 * Mnemonic words  
 * Final seed (512‑bit hex)
 
-## 🧪 Optional Solana Test (`test-sol-keygen.py`)
+## 🧪 Optional Solana Derivation (`keygen-sol.py`)
 
-If you want to verify the derived seed by generating a **Solana** key‑pair:
+Use these scripts to derive real wallet addresses from your BIP‑39 mnemonic and optional passphrase.
 
+### 🔹 Solana (`keygen-sol.py`)
 ```bash
+python3 -m venv venv
+source venv/bin/activate
 pip install bip_utils
-python3 test-sol-keygen.py
+sh -c "$(curl -sSfL https://release.solana.com/stable/install)"
+python keygen-sol.py
 ```
 
-`test-sol-keygen.py` reads your mnemonic & passphrase, derives the path  
+### 🔸 XRP (keygen-xrp.py)
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install bip_utils
+pip install xrpl-py
+python keygen-xrp.py
+```
+
+`keygen-xxx.py` reads your mnemonic & passphrase, derives the path  
 `m/44'/501'/0'/0'/0'`, and prints the first Solana address, public & private key.
 
 ## ⚠️ Warning
