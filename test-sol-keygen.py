@@ -19,6 +19,7 @@ wallet = (
     .AddressIndex(0)
 )
 
-print("Address:", wallet.PublicKey().ToAddress())
-print("Public Key:", wallet.PublicKey().RawCompressed().ToHex())
-print("Private Key:", wallet.PrivateKey().Raw().ToHex())
+print("Derivation path  : m/44'/501'/0'/0'/0'")
+print("Address          :", wallet.PublicKey().ToAddress())
+print("Public Key       :", wallet.PublicKey().RawCompressed().ToHex())
+print("Private Key      :", wallet.PrivateKey().Raw().ToHex())
