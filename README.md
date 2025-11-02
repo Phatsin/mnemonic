@@ -1,3 +1,7 @@
+Truly understand BIP-39 seed generation and key derivation, step by step and transparently.
+See exactly how wallet seeds and derivation really work.
+Everything happens in plain sight—not just results, but every process.
+
 # 🔐 BIP‑39 Mnemonic Generator (Bash)
 
 Generate 12 or 24‑word BIP‑39 mnemonics entirely in **Bash**.  
